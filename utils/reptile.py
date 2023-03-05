@@ -18,16 +18,17 @@ urls = {  # 爬虫目标urls
 if __name__ == "__main__":
     reg = re.compile(pattern)
     for url in urls:
+        # 查看图片保存的路径是否存在，若不存在则新建目录
         if not os.path.exists(suffix + url):
             os.mkdir(suffix + url)
         page = requests.get(urls[url]).text
-        links = re.findall(reg, page)
-        links_ = []
+        links = re.findall(reg, page)   # 匹配网页中所有的url
+        links_ = []                    # 清洗爬取的url
         for link in links:
             links_.append(link[1:-1])  # 去除url两边的引号
         num = 0
         pos = suffix + url + '/'
-        for i in links_:
+        for i in links_:            # 保存图片
             a = requests.get(i)
             with open(pos + '%s.jpg' % num, 'wb') as f:
                 f.write(a.content)
