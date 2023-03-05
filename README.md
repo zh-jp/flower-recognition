@@ -2,9 +2,12 @@
 基于Tensorflow花卉识别
 
 ---
-
-执行命令：
+- 安装`streamlit`库
 ```bash
-streamlit run webpage.py
+pip install streamlit
+```
+- 执行命令：
+```bash
+streamlit run .\webpage.py
 ```
 打开可视化界面
