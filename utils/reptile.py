@@ -1,11 +1,35 @@
 import re
 import requests
+import os
 
-reg = r'src=("http.+?pid=\d\.\d")'  # 匹配网页中的图片文件正则表达式
+suffix = 'D:/workspace/down_img/'  # 爬虫下载文件路径
+pattern = r'src=("http.+?pid=\d\.\d")'  # 匹配网页中的图片文件正则表达式
 
-urls = {
-    '鸡蛋花' : 'https://cn.bing.com/images/search?q=%e9%b8%a1%e8%9b%8b%e8%8a%b1&form=HDRSC2&first=1',
-    '牡丹' : 'https://cn.bing.com/images/search?q=%e7%89%a1%e4%b8%b9&form=HDRSC2&first=1',
-    '牵牛花' : '',
-    ''
+urls = {  # 爬虫目标urls
+    '蒲公英': 'https://cn.bing.com/images/search?q=%e8%92%b2%e5%85%ac%e8%8b%b1&form=HDRSC2&first=1',
+    '牵牛花': 'https://cn.bing.com/images/search?q=%e7%89%b5%e7%89%9b%e8%8a%b1&form=HDRSC2&first=1',
+    '牡丹': 'https://cn.bing.com/images/search?q=%e7%89%a1%e4%b8%b9&form=HDRSC2&first=1',
+    '鸡蛋花': 'https://cn.bing.com/images/search?q=%e9%b8%a1%e8%9b%8b%e8%8a%b1&form=HDRSC2&first=1',
+    '玫瑰花': 'https://cn.bing.com/images/search?q=%e7%8e%ab%e7%91%b0%e8%8a%b1&form=HDRSC2&first=1',
+    '向日葵': 'https://cn.bing.com/images/search?q=%e5%90%91%e6%97%a5%e8%91%b5&form=HDRSC2&first=1',
+    '郁金香': 'https://cn.bing.com/images/search?q=%e9%83%81%e9%87%91%e9%a6%99&form=HDRSC2&first=1'
 }
+
+if __name__ == "__main__":
+    reg = re.compile(pattern)
+    for url in urls:
+        if not os.path.exists(suffix + url):
+            os.mkdir(suffix + url)
+        page = requests.get(urls[url]).text
+        links = re.findall(reg, page)
+        links_ = []
+        for link in links:
+            links_.append(link[1:-1])  # 去除url两边的引号
+        num = 0
+        pos = suffix + url + '/'
+        for i in links_:
+            a = requests.get(i)
+            with open(pos + '%s.jpg' % num, 'wb') as f:
+                f.write(a.content)
+            num += 1
+        print(url + '爬取完毕！')
