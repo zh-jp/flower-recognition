@@ -78,7 +78,7 @@ def crawl_data(info, num):
 if __name__ == '__main__':
 
     # 关键词，可设置为多个
-    key_words = ['牵牛花', '鸡蛋花', '牡丹']
+    key_words = ['牡丹']
     # 下载的图片数量
     picture_num = 300
 
