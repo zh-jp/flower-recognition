@@ -14,6 +14,9 @@ urls = {  # 爬虫目标urls
     '向日葵': 'https://cn.bing.com/images/search?q=%e5%90%91%e6%97%a5%e8%91%b5&form=HDRSC2&first=1',
     '郁金香': 'https://cn.bing.com/images/search?q=%e9%83%81%e9%87%91%e9%a6%99&form=HDRSC2&first=1'
 }
+urls = {
+    '鸡蛋花2' : 'https://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=result&fr=&sf=1&fmq=1678021801074_R&pv=&ic=0&nc=1&z=&hd=&latest=&copyright=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&dyTabStr=&ie=utf-8&sid=&word=%E9%B8%A1%E8%9B%8B%E8%8A%B1'
+}
 
 if __name__ == "__main__":
     reg = re.compile(pattern)
@@ -22,6 +25,7 @@ if __name__ == "__main__":
         if not os.path.exists(suffix + url):
             os.mkdir(suffix + url)
         page = requests.get(urls[url]).text
+        print(page)
         links = re.findall(reg, page)   # 匹配网页中所有的url
         links_ = []                    # 清洗爬取的url
         for link in links:
