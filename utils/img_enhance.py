@@ -39,10 +39,10 @@ def imgTranslate(img):
 # 图像裁剪
 def imgCrop(img):
     rows, cols = img.shape[:2]
-    x = int(cols * 0.2)
-    w = int(cols * 0.6)
-    y = int(rows * 0.2)
-    h = int(rows * 0.6)
+    x = int(cols * 0.1)
+    w = int(cols * 0.8)
+    y = int(rows * 0.1)
+    h = int(rows * 0.8)
     # x, y, w, h = 100, 100, 200, 200 # 裁剪区域的左上角坐标和宽高
     img_crop = img[y:y+h, x:x+w]
     return img_crop
