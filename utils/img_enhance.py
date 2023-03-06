@@ -67,13 +67,13 @@ def imgColor(img):
 
 if __name__ == "__main__":
     # 读取图像
-    img = cv2.imread('D:/1670211885840.jpeg')
+    img = cv2.imread(r'C:\Users\hatsu\Desktop\dandelion.jpg')
     # 显示图像
     cv2.imshow('Original', img)
     # cv2.imshow('Adjust', imgAdjust(img))
     # cv2.imshow('Rotate', imgRotate(img))
     # cv2.imshow('Translate', imgTranslate(img))
-    cv2.imshow('Crop', imgCrop(img))
+    cv2.imshow('after', imgColor(img))
     # cv2.imshow('Resize', imgResize(img))
     # cv2.imshow('Color', imgColor(img))
     cv2.waitKey(0)

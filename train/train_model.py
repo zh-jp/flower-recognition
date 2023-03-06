@@ -22,6 +22,8 @@ def data_load(data_dir, img_height, img_width, batch_size):
         image_size=(img_height, img_width),
         batch_size=batch_size)
 
+    print(train_ds)
+    print(val_ds)
     class_names = train_ds.class_names
 
     return train_ds, val_ds, class_names
@@ -50,7 +52,6 @@ def model_load(IMG_SHAPE=(224, 224, 3), is_transfer=False):
             tf.keras.layers.Conv2D(32, (3, 3), activation='relu'),
             #最大值池化
             tf.keras.layers.MaxPooling2D(2, 2),
-
             #定义一个卷积层使用64个3*3大小的卷积核
             tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
             tf.keras.layers.MaxPooling2D(2, 2),
@@ -99,7 +100,7 @@ def show_loss_acc(history):
 def train(epochs, is_transfer=False):
 
     #加载数据
-    train_ds, val_ds, class_names = data_load("./data/flower_photos", 224, 224, 4)
+    train_ds, val_ds, class_names = data_load("C:\Users\hatsu\Desktop\flower", 224, 224, 4)
     #模型加载
     model = model_load(is_transfer=is_transfer)
     history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
@@ -114,5 +115,6 @@ def train(epochs, is_transfer=False):
 if __name__ == '__main__':
     train(epochs=10, is_transfer=True)
     train(epochs=4, is_transfer=False)
-    # test()
+    #epochs表示模型训练轮数，is_transfer为True时表示使用迁移学习
+    #否则使用非迁移学习
 
