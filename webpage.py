@@ -18,10 +18,10 @@ def main_windows():
 
     option = st.selectbox(
         '-------',
-        ('测试', '训练（训练需较多时间等待）')
+        ('花卉图片识别', '训练（训练需较多时间等待）')
     )
     st.markdown('选择了' + '*' + option[:2] + "*")
-    if option == '测试':
+    if option == '花卉图片识别':
         upload_file = st.file_uploader(label="$$图片上传$$", type=['png', 'jpg', 'jpeg'])
         if upload_file is not None:
             file = cache_path + '/' + upload_file.name
