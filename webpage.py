@@ -62,7 +62,6 @@ def side_bar():
     st.sidebar.markdown('[范沛广](https://github.com/fpgboy)')
     st.sidebar.markdown('[丁文涛](https://github.com/miku122)')
     st.sidebar.title('相关文档')
-    st.sidebar.markdown('~这部分超链接后期要变更~')
     st.sidebar.markdown(
         '[花卉识别任务书](https://github.com/zh-jp/flower-recognition/blob/main/%E8%8A%B1%E5%8D%89%E8%AF%86%E5%88%AB%E4%BB%BB%E5%8A%A1%E4%B9%A6V1.0.docx)')
     st.sidebar.markdown(
