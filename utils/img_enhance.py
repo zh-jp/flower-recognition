@@ -67,18 +67,18 @@ def imgColor(img):
 # 水平翻转
 def imgHFlip(img):
     h_flip = cv2.flip(img, 1)  # 水平翻转
-    return img
+    return h_flip
 
 
 if __name__ == "__main__":
     # 读取图像
-    img = cv2.imread(r'C:\Users\hatsu\Desktop\dandelion.jpg')
+    img = cv2.imread(r'C:\Users\hatsu\Desktop\images_for_test\1.jpg')
     # 显示图像
     cv2.imshow('Original', img)
     # cv2.imshow('Adjust', imgAdjust(img))
     # cv2.imshow('Rotate', imgRotate(img))
     # cv2.imshow('Translate', imgTranslate(img))
-    cv2.imshow('after', imgColor(img))
+    cv2.imshow('after', imgHFlip(img))
     # cv2.imshow('Resize', imgResize(img))
     # cv2.imshow('Color', imgColor(img))
     cv2.waitKey(0)
