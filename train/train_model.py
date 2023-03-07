@@ -100,7 +100,7 @@ def show_loss_acc(history):
 def train(epochs, is_transfer=False):
 
     #加载数据
-    train_ds, val_ds, class_names = data_load("C:\Users\hatsu\Desktop\flower", 224, 224, 4)
+    train_ds, val_ds, class_names = data_load("C:/Users/hatsu/Desktop/flower", 224, 224, 4)
     #模型加载
     model = model_load(is_transfer=is_transfer)
     history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
