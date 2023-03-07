@@ -1,17 +1,19 @@
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
-# 数据加载及划分，按照8:2的比例加载花卉数据
+
+# 数据集下载地址：https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz
+# 数据加载，按照8:2的比例加载花卉数据
 def data_load(data_dir, img_height, img_width, batch_size):
     #生成tf.data.Dataset类型的数据
     train_ds = tf.keras.preprocessing.image_dataset_from_directory(
-        data_dir,                 #文件目录
-        label_mode='categorical', #标签编码为分类向量
-        validation_split=0.2,     #保留20%的数据用于验证集
-        subset="training",        #80%的训练集
-        seed=123,                 #设置用于shuffle和转换的可选随机种子
-        image_size=(img_height, img_width),#图片大小
-        batch_size=batch_size)    #设置数据批次的大小，默认为32
+        data_dir,
+        label_mode='categorical',
+        validation_split=0.2,
+        subset="training",
+        seed=123,
+        image_size=(img_height, img_width),
+        batch_size=batch_size)
 
     val_ds = tf.keras.preprocessing.image_dataset_from_directory(
         data_dir,
@@ -31,34 +33,54 @@ def data_load(data_dir, img_height, img_width, batch_size):
 
 # 模型加载，指定图片处理的大小和是否进行迁移学习
 def model_load(IMG_SHAPE=(224, 224, 3), is_transfer=False):
+    # data_augmentation = tf.keras.Sequential([
+    #     tf.keras.layers.experimental.preprocessing.RandomFlip('horizontal'),
+    #     tf.keras.layers.experimental.preprocessing.RandomRotation(0.2),
+    # ])
     if is_transfer:
-        # 微调的过程中不需要对数据进行归一化的处理，此处我们采用已经封装好的MoblieNetV2模型
-        base_model = tf.keras.applications.MobileNetV2(input_shape=IMG_SHAPE,  #设置图片大小
-                                          include_top=False,                   #不加载顶层模型
-                                          weights='imagenet')                  #使用ImageNet的参数初始化模型的参数
-        base_model.trainable = False                                           #固定MoblieNetV2的权重
-        #使用sequentail拼接网络结构
+        # 微调的过程中不需要进行归一化的处理
+        base_model = tf.keras.applications.MobileNetV2(input_shape=IMG_SHAPE,
+                                          include_top=False,
+                                          weights='imagenet')
+        base_model.trainable = False
         model = tf.keras.models.Sequential([
             tf.keras.layers.experimental.preprocessing.Rescaling(1./127.5, offset=-1, input_shape=IMG_SHAPE),
             base_model,
-            tf.keras.layers.GlobalAveragePooling2D(),      #平均值池化
-            tf.keras.layers.Dense(7, activation='softmax') #自己设置顶层
+            tf.keras.layers.GlobalAveragePooling2D(),
+            tf.keras.layers.Dense(7, activation='softmax')
         ])
     else:
         model = tf.keras.models.Sequential([
-            #归一化，将像素值处理成0到1之间的值
+             #归一化，将像素值处理成0到1之间的值
             tf.keras.layers.experimental.preprocessing.Rescaling(1. / 255, input_shape=IMG_SHAPE),
             #定义一个卷积层，使用32个3*3大小的卷积核，激活函数使用relu
-            tf.keras.layers.Conv2D(32, (3, 3), activation='relu'),
+            tf.keras.layers.Conv2D(16, (3, 3),strides=(1, 1),padding='same', activation='relu'),
             #最大值池化
+            tf.keras.layers.MaxPooling2D(pool_size=(2, 2),strides=(2, 2),padding='same'),
+
+            tf.keras.layers.Conv2D(32, (3, 3),strides=(1, 1),padding='same', activation='relu'),
+            #最大值池化
+<<<<<<< HEAD
             tf.keras.layers.MaxPooling2D(2, 2),
+=======
+            tf.keras.layers.MaxPooling2D(pool_size=(2, 2),strides=(2, 2),padding='same'),
+
+>>>>>>> 25082d8 (更新模型代码)
             #定义一个卷积层使用64个3*3大小的卷积核
-            tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
-            tf.keras.layers.MaxPooling2D(2, 2),
+            tf.keras.layers.Conv2D(64, (3, 3),strides=(1, 1),padding='same', activation='relu'),
+            tf.keras.layers.MaxPooling2D(pool_size=(2, 2),strides=(2, 2),padding='same'),
+
+            tf.keras.layers.Conv2D(128, (3, 3),strides=(2, 2),padding='same', activation='relu',kernel_regularizer=tf.keras.regularizers.l2(0.0001)),
+            tf.keras.layers.MaxPooling2D(pool_size=(2, 2),strides=(2, 2),padding='same'),
+
+            #tf.keras.layers.Conv2D(64, (3, 3),padding='same', activation='relu',kernel_regularizer=tf.keras.regularizers.l2(0.01)),
+            #tf.keras.layers.Conv2D(128, (7, 7), activation='relu',kernel_regularizer=tf.keras.regularizers.l2(0.01)),
+            #tf.keras.layers.GlobalAveragePooling2D(),
             #将多维特征值展开为向量
             tf.keras.layers.Flatten(),
             #使用一个128个结点的全连接层
-            tf.keras.layers.Dense(128, activation='relu'),
+            tf.keras.layers.Dense(2048, activation='relu',kernel_regularizer=tf.keras.regularizers.l2(0.0001)),
+            tf.keras.layers.Dense(1024,activation='relu'),
             #输出顶层预测结果
             tf.keras.layers.Dense(7, activation='softmax')
         ])
@@ -100,7 +122,12 @@ def show_loss_acc(history):
 def train(epochs, is_transfer=False):
 
     #加载数据
+<<<<<<< HEAD
     train_ds, val_ds, class_names = data_load("C:/Users/hatsu/Desktop/flower", 224, 224, 4)
+=======
+    #train_ds, val_ds, class_names = data_load("./data/flower_photos_split", 224, 224, 4)
+    train_ds, val_ds, class_names = data_load("./data/flower_photos", 224, 224, 4)
+>>>>>>> 25082d8 (更新模型代码)
     #模型加载
     model = model_load(is_transfer=is_transfer)
     history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
@@ -113,8 +140,14 @@ def train(epochs, is_transfer=False):
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     train(epochs=10, is_transfer=True)
     train(epochs=4, is_transfer=False)
     #epochs表示模型训练轮数，is_transfer为True时表示使用迁移学习
     #否则使用非迁移学习
+=======
+    #train(epochs=10, is_transfer=True)
+    train(epochs=10, is_transfer=False)
+    # test()
+>>>>>>> 25082d8 (更新模型代码)
 
