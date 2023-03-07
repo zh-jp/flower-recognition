@@ -92,9 +92,9 @@ def side_bar():
     st.sidebar.markdown('[钱炫任]()')
     st.sidebar.title('相关文档')
     st.sidebar.markdown(
-        '[花卉识别任务书](file:///D:/doc/花卉识别.docx)')
+        '[花卉识别任务书](https://github.com/zh-jp/flower-recognition/blob/main/%E8%8A%B1%E5%8D%89%E8%AF%86%E5%88%AB.docx)')
     st.sidebar.markdown(
-        '[PPT](file:///D:/doc/项目名称（模板）.pptx)')
+        '[PPT](https://github.com/zh-jp/flower-recognition/blob/main/%E7%AD%94%E8%BE%A9PPT.pptx)')
 
 
 def train_page():
