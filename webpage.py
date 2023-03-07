@@ -7,14 +7,14 @@ import cv2
 import train.train_model as train_model
 import time
 
-model = tf.keras.models.load_model('train/models/cnn_flower.h5')
+
 cache_path = 'D:/flowers-recognition-cache/'
 # 顺序为：['dandelion', 'morning_glory', 'peony', 'plumeria_ubra', 'roses', 'sunflowers', 'tulips']
 class_names = ['蒲公英', '牵牛花', '牡丹', '鸡蛋花', '玫瑰花', '向日葵', '郁金香']
 if os.path.exists(cache_path) is False:
     os.mkdir(cache_path)
-
-
+model = tf.keras.models.load_model('train/models/cnn_flower.h5')
+model_transfer = tf.keras.models.load_model('train/models/mobilenet_flower.h5')
 def main_windows():
     st.title('基于Tensorflow的花卉识别')
 
@@ -24,6 +24,13 @@ def main_windows():
     )
     st.markdown('选择了' + '*' + option + "*")
     if option == '花卉图片识别':
+        # 模型选择
+        model_option = st.selectbox(
+            '-------',
+            ('自训练模型', 'mobilenet模型（迁移学习模型）')
+        )
+        st.markdown('选择了' + '*' + model_option + "*")
+        model_name = model_option
         upload_file = st.file_uploader(label="$$图片上传$$", type=['png', 'jpg', 'jpeg'])
         if upload_file is not None:
             file = cache_path + '/' + upload_file.name
@@ -46,7 +53,7 @@ def main_windows():
                 percent_complete = 100
                 progress_text = "识别完成，结果是..."
                 my_bar.progress(percent_complete, text=progress_text)
-                outputs = predict(file)
+                outputs = predict(file, model_name)
                 st.success('该图片可能是：'+outputs)
                 st.balloons()
     else:
@@ -69,14 +76,17 @@ def main_windows():
             train_model.train(epochs=10, is_transfer=False)
 
 
-def predict(file: str) -> str:
+def predict(file: str, model_name) -> str:
     img_init = cv2.imread(file)
     img_init = cv2.resize(img_init, (224, 224))
     cv2.imwrite(file, img_init)
 
     img = Image.open(file)
     img = np.asarray(img)
-    outputs = model.predict(img.reshape(1, 224, 224, 3))
+    if model_name == '自训练模型':
+        outputs = model.predict(img.reshape(1, 224, 224, 3))
+    else:
+        outputs = model_transfer.predict(img.reshape(1, 224, 224, 3))
     result_index = np.argmax(outputs)
     result = class_names[result_index]
     return result
