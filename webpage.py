@@ -26,7 +26,8 @@ def main_windows():
     if option == '花卉图片识别':
         # 模型选择
         model_option = st.selectbox(
-            '-------',
+            ''
+            '模型选择栏',
             ('自训练模型', 'mobilenet模型（迁移学习模型）')
         )
         st.markdown('选择了' + '*' + model_option + "*")
