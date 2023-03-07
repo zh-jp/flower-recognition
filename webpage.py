@@ -20,7 +20,7 @@ def main_windows():
         '-------',
         ('花卉图片识别', '训练（训练需较多时间等待）')
     )
-    st.markdown('选择了' + '*' + option[:2] + "*")
+    st.markdown('选择了' + '*' + option + "*")
     if option == '花卉图片识别':
         upload_file = st.file_uploader(label="$$图片上传$$", type=['png', 'jpg', 'jpeg'])
         if upload_file is not None:
@@ -28,18 +28,22 @@ def main_windows():
             with open(file, 'wb') as f:  # 将图片存入本地缓存
                 f.write(upload_file.read())
             st.markdown(
-                "<style>div.stButton > button:first-child {background-color: #4CAF50; color: white; width: 700px; }</style>",
+                "<style>div.stButton > button:first-child {background-color: #4CAF50; color: white; width: 700px; "
+                "}</style>",
                 unsafe_allow_html=True,
             )
             click = st.button('Predict')
             st.image(upload_file)
             st.markdown('文件名为：' + '`' + upload_file.name + '`')
-            outputs = ''
             if click:
                 outputs = predict(file)
-            st.write(outputs)
+                st.success('该图片可能是：'+outputs)
     else:
-        pass
+        st.markdown(
+            "<style>div.stButton > button:first-child {background-color: #FF66CC; color: white; width: 700px; }</style>",
+            unsafe_allow_html=True,
+        )
+        click = st.button('Train')
 
 
 def predict(file: str) -> str:
@@ -51,12 +55,12 @@ def predict(file: str) -> str:
     img = np.asarray(img)
     outputs = model.predict(img.reshape(1, 224, 224, 3))
     result_index = np.argmax(outputs)
-    # print(result_index)
     result = class_names[result_index]
     return result
 
 
 def side_bar():
+    st.sidebar.image('imgs/side_bar.jpg')
     st.sidebar.title('Authors')
     st.sidebar.markdown('[郑金鹏](https://github.com/zh-jp)')
     st.sidebar.markdown('[范沛广](https://github.com/fpgboy)')
