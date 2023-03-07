@@ -53,19 +53,15 @@ def model_load(IMG_SHAPE=(224, 224, 3), is_transfer=False):
         model = tf.keras.models.Sequential([
              #归一化，将像素值处理成0到1之间的值
             tf.keras.layers.experimental.preprocessing.Rescaling(1. / 255, input_shape=IMG_SHAPE),
-            #定义一个卷积层，使用32个3*3大小的卷积核，激活函数使用relu
+            #定义一个卷积层，使用16个3*3大小的卷积核，激活函数使用relu
             tf.keras.layers.Conv2D(16, (3, 3),strides=(1, 1),padding='same', activation='relu'),
             #最大值池化
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2),strides=(2, 2),padding='same'),
 
             tf.keras.layers.Conv2D(32, (3, 3),strides=(1, 1),padding='same', activation='relu'),
             #最大值池化
-<<<<<<< HEAD
-            tf.keras.layers.MaxPooling2D(2, 2),
-=======
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2),strides=(2, 2),padding='same'),
 
->>>>>>> 25082d8 (更新模型代码)
             #定义一个卷积层使用64个3*3大小的卷积核
             tf.keras.layers.Conv2D(64, (3, 3),strides=(1, 1),padding='same', activation='relu'),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2),strides=(2, 2),padding='same'),
