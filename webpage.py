@@ -65,7 +65,7 @@ def main_windows():
             # percent_complete = 100
             # progress_text = '模型训练完成'
             # my_bar.progress(percent_complete, text=progress_text)
-
+            os.system('python ./train/train_model.py')
             train_model.train(epochs=10, is_transfer=False)
 
 
@@ -92,9 +92,9 @@ def side_bar():
     st.sidebar.markdown('[钱炫任]()')
     st.sidebar.title('相关文档')
     st.sidebar.markdown(
-        '[花卉识别任务书](./花卉识别.docx)')
+        '[花卉识别任务书](file:///D:/doc/花卉识别.docx)')
     st.sidebar.markdown(
-        '[PPT](./项目名称（模板）.pptx)')
+        '[PPT](file:///D:/doc/项目名称（模板）.pptx)')
 
 
 def train_page():
