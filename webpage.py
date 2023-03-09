@@ -95,20 +95,9 @@ def predict(file: str, model_name) -> str:
 def side_bar():
     st.sidebar.image('imgs/side_bar.jpg')
     st.sidebar.title('Authors')
-    st.sidebar.markdown('[郑金鹏](https://github.com/zh-jp)')
-    st.sidebar.markdown('[范沛广](https://github.com/fpgboy)')
-    st.sidebar.markdown('[丁文涛](https://github.com/miku122)')
-    st.sidebar.markdown('[谭楚飞]()')
-    st.sidebar.markdown('[钱炫任]()')
-    st.sidebar.title('相关文档')
-    st.sidebar.markdown(
-        '[花卉识别任务书](https://github.com/zh-jp/flower-recognition/blob/main/%E8%8A%B1%E5%8D%89%E8%AF%86%E5%88%AB.docx)')
-    st.sidebar.markdown(
-        '[PPT](https://github.com/zh-jp/flower-recognition/blob/main/%E7%AD%94%E8%BE%A9PPT.pptx)')
-
-
-def train_page():
-    pass
+    st.sidebar.markdown('[Z-J-P](https://github.com/zh-jp)')
+    st.sidebar.markdown('[F-P-G](https://github.com/fpgboy)')
+    st.sidebar.markdown('[D-W-T](https://github.com/miku122)')
 
 
 if __name__ == "__main__":

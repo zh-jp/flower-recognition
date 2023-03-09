@@ -1,6 +1,8 @@
 # flower-recognition
 
+
 基于Tensorflow花卉识别
+[参考开源代码](https://github.com/cmFighting/Flower_tf2.3)
 
 ---
 
@@ -49,7 +51,9 @@ streamlit run .\webpage.py
 ## The Catalogue
 
 - `.idea`: Pycharm配置文件
+- `data`: 存放数据集
+- `imgs`: 存放网页图片
 - `utils`: 工具代码文件夹
 - `train`: 深度学习相关代码
-- `.docx`: 任务书
-- `.pptx`: 答辩PPT
+- `webpage.py`: Streamlit前端
+

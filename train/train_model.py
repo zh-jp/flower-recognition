@@ -2,7 +2,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 
 
-# 数据集下载地址：https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz
+
 # 数据加载，按照8:2的比例加载花卉数据
 def data_load(data_dir, img_height, img_width, batch_size):
     #生成tf.data.Dataset类型的数据

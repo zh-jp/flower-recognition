@@ -1,4 +1,5 @@
 # 模型太大！不再上传Github！
-/train/models
+/train/models/cnn_flower.h5
+/train/models/mobilenet_flower.h5
 /.idea
-/data/
+/data/flower_photos/
